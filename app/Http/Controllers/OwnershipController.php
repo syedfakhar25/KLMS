@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Owenership;
 use Illuminate\Http\Request;
 
 class OwnershipController extends Controller
@@ -13,7 +14,11 @@ class OwnershipController extends Controller
      */
     public function index()
     {
-        //
+        $ownership = Owenership::all();
+
+        return response()->json(
+            ['ownership' => $ownership],
+            200);
     }
 
     /**
@@ -34,7 +39,11 @@ class OwnershipController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ownership = Owenership::create($request->all());
+
+        return response()->json(
+            ['ownership' => $ownership],
+            200);
     }
 
     /**
@@ -45,7 +54,11 @@ class OwnershipController extends Controller
      */
     public function show($id)
     {
-        //
+        $ownership = Owenership::find($id);
+
+        return response()->json(
+            ['ownership' => $ownership],
+            200);
     }
 
     /**
@@ -68,7 +81,12 @@ class OwnershipController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $ownership= Owenership::find($id);
+        $ownership->update($request->all());
+
+        return response()->json(
+            ['ownership' => $ownership],
+            200);
     }
 
     /**
@@ -79,6 +97,9 @@ class OwnershipController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ownership= Owenership::find($id);
+        $ownership->delete();
+
+        return response()->json(['message' => 'Ownership deleted successfully']);
     }
 }
