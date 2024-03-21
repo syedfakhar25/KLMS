@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('premeses', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->integer('user_id')->nullable();
             $table->string('province')->nullable();
             $table->string('district')->nullable();
             $table->string('tehsil')->nullable();

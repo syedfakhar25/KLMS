@@ -21,6 +21,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'province',
+        'district',
+        'tehsil',
+        'uc',
+        'village',
+        'role_id',
     ];
 
     /**
@@ -41,4 +47,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function premises(){
+        return $this->hasMany(premesis::class);
+    }
 }
