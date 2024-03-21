@@ -40,21 +40,17 @@ class UserContoller extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users'), // Check uniqueness in the 'users' table
-            ],
-        ]);
+        $email_exists = User::where('email', $request->email)->first();
 
-        try {
-            $user = User::create($validatedData);
+        if($email_exists){
+            return response()->json(['message' => 'Email Exists'], 401);
+        }
+        else{
+            $user = User::create($request->all());
 
-            return response()->json(['user' => $user], 200);
-        } catch (\Exception $e) {
-            // Handle the exception if there's an error during user creation
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json(
+                ['user' => $user],
+                200);
         }
     }
 
