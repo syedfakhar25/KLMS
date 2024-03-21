@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vaccination;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
-class VaccincationController extends Controller
+class UserContoller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +15,10 @@ class VaccincationController extends Controller
      */
     public function index()
     {
-        $vaccination = Vaccination::all();
+        $users = User::with('premises')->get();
 
         return response()->json(
-            ['vaccination' => $vaccination],
+            ['users' => $users],
             200);
     }
 
@@ -39,7 +40,22 @@ class VaccincationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users'), // Check uniqueness in the 'users' table
+            ],
+        ]);
+
+        try {
+            $user = User::create($validatedData);
+
+            return response()->json(['user' => $user], 200);
+        } catch (\Exception $e) {
+            // Handle the exception if there's an error during user creation
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -50,7 +66,11 @@ class VaccincationController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+
+        return response()->json(
+            ['user' => $user],
+            200);
     }
 
     /**
@@ -73,7 +93,12 @@ class VaccincationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user= User::find($id);
+        $user->update($request->all());
+
+        return response()->json(
+            ['user' => $user],
+            200);
     }
 
     /**
@@ -84,6 +109,10 @@ class VaccincationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user= User::find($id);
+        $user->delete();
+
+        return response()->json(['message' => 'User deleted successfully']);
+
     }
 }
