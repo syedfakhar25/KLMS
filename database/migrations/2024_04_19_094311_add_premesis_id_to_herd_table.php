@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('herds', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->nullable();
-            $table->integer('quantity')->nullable();
-            $table->timestamps();
+        Schema::table('herds', function (Blueprint $table) {
+            $table->integer('premesis_id')->nullable();
         });
     }
 
@@ -28,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('herds');
+        Schema::table('herds', function (Blueprint $table) {
+            $table->deleteColumn(['premesis_id']);
+        });
     }
 };
