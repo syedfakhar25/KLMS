@@ -47,7 +47,7 @@ class HerdController extends Controller
         }
  
         return response()->json(
-            ['ownership' => $herd],
+            ['herd' => $herd],
             200);
     }
 
@@ -62,7 +62,7 @@ class HerdController extends Controller
         $herd = Herd::find($id);
 
         return response()->json(
-            ['ownership' => $herd],
+            ['herd' => $herd],
             200);
     }
 
@@ -90,7 +90,7 @@ class HerdController extends Controller
         $herd->update($request->all());
 
         return response()->json(
-            ['ownership' => $herd],
+            ['herd' => $herd],
             200);
     }
 
@@ -105,6 +105,6 @@ class HerdController extends Controller
         $ownership= Herd::find($id);
         $ownership->delete();
 
-        return response()->json(['message' => 'Ownership deleted successfully']);
+        return response()->json(['message' => 'Herd deleted successfully']);
     }
 }
