@@ -37,4 +37,8 @@ class premesis extends Model
     public function animal(){
         return $this->hasMany(Animal::class);
     }
+
+    public function herd(){
+        return $this->hasMany(Herd::class);
+    }
 }

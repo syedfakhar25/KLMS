@@ -10,7 +10,9 @@ class Herd extends Model
     use HasFactory;
 
     protected $fillable = [
+        'premesis_id',
         'name',
         'quantity'
     ];
+    
 }

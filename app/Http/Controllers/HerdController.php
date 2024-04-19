@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Herd;
 use Illuminate\Http\Request;
 
 class HerdController extends Controller
@@ -13,7 +14,10 @@ class HerdController extends Controller
      */
     public function index()
     {
-        //
+        $herd = Herd::all();
+        return response()->json(
+            ['herd' => $herd],
+            200);
     }
 
     /**
@@ -34,7 +38,17 @@ class HerdController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $data = $request->all();
+
+        $herd = [];
+        foreach ($data as $item) {
+            $ownerships[] = Herd::create($item);
+        }
+ 
+        return response()->json(
+            ['ownership' => $herd],
+            200);
     }
 
     /**
@@ -45,7 +59,11 @@ class HerdController extends Controller
      */
     public function show($id)
     {
-        //
+        $herd = Herd::find($id);
+
+        return response()->json(
+            ['ownership' => $herd],
+            200);
     }
 
     /**
@@ -68,7 +86,12 @@ class HerdController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $herd= Herd::find($id);
+        $herd->update($request->all());
+
+        return response()->json(
+            ['ownership' => $herd],
+            200);
     }
 
     /**
@@ -79,6 +102,9 @@ class HerdController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ownership= Herd::find($id);
+        $ownership->delete();
+
+        return response()->json(['message' => 'Ownership deleted successfully']);
     }
 }

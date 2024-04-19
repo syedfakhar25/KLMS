@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('herds', function (Blueprint $table) {
             $table->id();
+            $table->integer('premesis_id')->nullable();
             $table->string('name')->nullable();
             $table->integer('quantity')->nullable();
             $table->timestamps();
