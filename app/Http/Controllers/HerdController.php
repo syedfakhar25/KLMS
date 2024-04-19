@@ -49,7 +49,7 @@ class HerdController extends Controller
             ]);
         }
     
-        return response()->json(['herd' => $herd], 200);
+        return response()->json(['herdd' => $herd], 200);
     }
     
 
