@@ -39,15 +39,14 @@ class HerdController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $herd = [];
     
-        foreach ($data['premesis_id'] as $index => $premesisId) {
-            $item = [
+        $herd = [];
+        foreach ($data['premesis_id'] as $key => $premesisId) {
+            $herd[] = Herd::create([
                 'premesis_id' => $premesisId,
-                'name' => $data['name'][$index],
-                'quantity' => $data['quantity'][$index],
-            ];
-            $herd[] = Herd::create($item);
+                'name' => $data['name'][$key],
+                'quantity' => $data['quantity'][$key],
+            ]);
         }
     
         return response()->json(['herd' => $herd], 200);
