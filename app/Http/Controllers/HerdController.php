@@ -39,7 +39,7 @@ class HerdController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-    
+        dd($data);
         $herd = [];
         foreach ($data['premesis_id'] as $key => $premesisId) {
             $herd[] = Herd::create([
