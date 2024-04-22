@@ -37,20 +37,25 @@ class HerdController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $data = $request->all();
-        dd($data);
-        $herd = [];
-        foreach ($data['premesis_id'] as $key => $premesisId) {
-            $herd[] = Herd::create([
-                'premesis_id' => $premesisId,
-                'name' => $data['name'][$key],
-                'quantity' => $data['quantity'][$key],
-            ]);
-        }
-    
-        return response()->json(['herdd' => $herd], 200);
+{
+    $data = $request->all(); // Get all data from the request
+
+
+    $request->validate([
+        '*.premesis_id' => 'required|integer',
+        '*.name' => 'required|string',
+        '*.quantity' => 'required|integer'
+    ]);
+
+    $herd = [];
+    foreach ($data as $item) {
+        // Create each new Ownership from the validated data
+        $herd[] = Herd::create($item);
     }
+
+    return response()->json(['herd' => $herd], 200);
+}
+
     
 
     /**
