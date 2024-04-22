@@ -39,8 +39,10 @@ class OwnershipController extends Controller
      */
     public function store(Request $request)
     {
-        $ownership = Owenership::create($request->all());
+      //  dd('here');
 
+        $ownership = Owenership::create($request->all());
+       // dd($ownership);
         return response()->json(
             ['ownership' => $ownership],
             200);
