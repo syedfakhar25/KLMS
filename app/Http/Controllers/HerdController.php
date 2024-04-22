@@ -40,7 +40,6 @@ class HerdController extends Controller
 {
     $data = $request->all(); // Get all data from the request
 
-    dd( $data );
     $request->validate([
         '*.premesis_id' => 'required|integer',
         '*.name' => 'required|string',
