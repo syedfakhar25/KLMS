@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('premises', \App\Http\Controllers\PremesisController::class);
     Route::resource('ownership', \App\Http\Controllers\OwnershipController::class);
+    Route::resource('herd', \App\Http\Controllers\HerdController::class);
     Route::resource('vaccination', \App\Http\Controllers\VaccincationController::class);
 
     // send general data:
