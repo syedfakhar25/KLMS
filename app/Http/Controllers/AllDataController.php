@@ -29,12 +29,12 @@ class AllDataController extends Controller
 
 // Organize district data into key-value pairs
         foreach ($districtsResult as $district) {
-            $districts[$district->id] = $district->name;
+            $districts[$district->id] = $district->district_name;
         }
 
 // Organize division data into key-value pairs
         foreach ($divisionsResult as $division) {
-            $divisions[$division->id] = $division->name;
+            $divisions[$division->id] = $division->division_name;
         }
 
 // Organize village data into key-value pairs
@@ -44,12 +44,12 @@ class AllDataController extends Controller
 
 // Organize tehsil data into key-value pairs
         foreach ($tehsilsResult as $tehsil) {
-            $tehsils[$tehsil->id] = $tehsil->name;
+            $tehsils[$tehsil->id] = $tehsil->tehsil_name;
         }
 
 // Organize council data into key-value pairs
         foreach ($councilsResult as $council) {
-            $councils[$council->id] = $council->name;
+            $councils[$council->id] = $council->council_name;
         }
 
 // Fetch data for species, productions, species_productions, and breeds
@@ -95,7 +95,7 @@ class AllDataController extends Controller
                 'councils' => $councils,
                 'species' => $species,
                 'productions' => $productions,
-                'species_productions' => $species_productions,
+                'species_productions' => $speciesProductions,
                 'breeds' => $breeds,
 
             ],
