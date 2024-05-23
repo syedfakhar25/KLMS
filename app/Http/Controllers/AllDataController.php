@@ -73,7 +73,7 @@ class AllDataController extends Controller
         foreach ($speciesProductionsResult as $speciesProduction) {
             // Assuming species_productions table has a unique id field
             $speciesProductions[$speciesProduction->id] = [
-                'species_id' => $speciesProduction->species_id,
+                'species_id' => $speciesProduction->specie_id,
                 'production_id' => $speciesProduction->production_id
             ];
         }
