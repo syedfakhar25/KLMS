@@ -29,28 +29,42 @@ class AllDataController extends Controller
         $councilsResult = DB::select('SELECT * FROM councils');
 
 // Organize district data into key-value pairs
+        $districts= [];
         foreach ($districtsResult as $district) {
-            $districts[$district->id] = $district->district_name;
+            // $districts[$district->id] = $district->district_name;
+            $districts[] = ['key' => $district->id, 'value' => $district->district_name];
+
         }
 
 // Organize division data into key-value pairs
+        $divisions= [];
         foreach ($divisionsResult as $division) {
-            $divisions[$division->id] = $division->division_name;
+            // $divisions[$division->id] = $division->division_name;
+            $divisions[] = ['key' => $division->id, 'value' => $division->division_name];
+
         }
 
 // Organize village data into key-value pairs
+        $villages=[];
+        // foreach ($villagesResult as $village) {
+        //     $villages[$village->id] = $village->name;
+        // }
         foreach ($villagesResult as $village) {
-            $villages[$village->id] = $village->name;
+            $villages[] = ['key' => $village->id, 'value' => $village->name];
         }
 
 // Organize tehsil data into key-value pairs
+        $tehsils=[];
         foreach ($tehsilsResult as $tehsil) {
-            $tehsils[$tehsil->id] = $tehsil->tehsil_name;
+            // $tehsils[$tehsil->id] = $tehsil->tehsil_name;
+            $tehsils[] = ['key' => $tehsil->id, 'value' => $tehsil->tehsil_name];
         }
 
 // Organize council data into key-value pairs
+        $councils=[];
         foreach ($councilsResult as $council) {
-            $councils[$council->id] = $council->council_name;
+            // $councils[$council->id] = $council->council_name;
+            $councils[] = ['key' => $council->id, 'value' => $council->council_name];
         }
 
 // Fetch data for species, productions, species_productions, and breeds
@@ -61,13 +75,19 @@ class AllDataController extends Controller
         $breedsResult = DB::select('SELECT * FROM breeds');
 
 // Organize species data into key-value pairs
+        $species=[];
         foreach ($speciesResult as $specie) {
-            $species[$specie->id] = $specie->name;
+            // $species[$specie->id] = $specie->name;
+            $species[] = ['key' => $specie->id, 'value' => $specie->name];
+
         }
 
 // Organize production data into key-value pairs
+        $productions=[];
         foreach ($productionsResult as $production) {
-            $productions[$production->id] = $production->name;
+            // $productions[$production->id] = $production->name;
+            $productions[] = ['key' => $production->id, 'value' => $production->name];
+
         }
 
 // Organize species productions data into key-value pairs
@@ -80,8 +100,11 @@ class AllDataController extends Controller
         }
 
 // Organize breed data into key-value pairs
+        $breeds=[];
         foreach ($breedsResult as $breed) {
-            $breeds[$breed->id] = $breed->name;
+            // $breeds[$breed->id] = $breed->name;
+            $productions[] = ['key' => $breed->id, 'value' => $breed->name];
+
         }
 
 // Now you have organized data in key-value pairs for each category
