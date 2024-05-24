@@ -21,12 +21,13 @@ class AllDataController extends Controller
         $species_productions = DB::select('SELECT * FROM species_productions');
         $breeds = DB::select('SELECT * FROM breeds');*/
         // Fetch data for districts, divisions, villages, tehsils, and councils
-        $districts = $divisions = $villages = $tehsils = $councils = [];
+        $districts = $divisions = $villages = $tehsils = $councils = $premesesTypes = [];
         $districtsResult = DB::select('SELECT * FROM districts');
         $divisionsResult = DB::select('SELECT * FROM divisions');
         $villagesResult = DB::select('SELECT * FROM villages');
         $tehsilsResult = DB::select('SELECT * FROM tehsils');
         $councilsResult = DB::select('SELECT * FROM councils');
+        $premesestypeResult = DB::select('SELECT * FROM premeses_type');
 
 // Organize district data into key-value pairs
         $districts= [];
@@ -65,6 +66,12 @@ class AllDataController extends Controller
         foreach ($councilsResult as $council) {
             // $councils[$council->id] = $council->council_name;
             $councils[] = ['key' => $council->id, 'value' => $council->council_name, 'parent_id'=>$council->tehsil_id];
+        }
+// Organize premesesType data into key-value pairs
+        $premesesTypes=[];
+        foreach ($premesestypeResult as $type) {
+            // $councils[$council->id] = $council->council_name;
+            $premesesTypes[] = ['key' => $type->id, 'value' => $type->name];
         }
 
 // Fetch data for species, productions, species_productions, and breeds
@@ -117,6 +124,7 @@ class AllDataController extends Controller
                 'tehsils' => $tehsils,
                 'villages' => $villages,
                 'councils' => $councils,
+                'premices' => $premesesTypes,
                 'species' => $species,
                 'productions' => $productions,
                 'species_productions' => $speciesProductions,
