@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class premesis extends Model
 {
     use HasFactory;
+    public $timestamps = true;
 
     protected $fillable = [
         'name',

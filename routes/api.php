@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('users', \App\Http\Controllers\UserContoller::class);
 
-    Route::resource('premises', \App\Http\Controllers\PremesisController::class);
+    Route::resource('/premises', \App\Http\Controllers\PremesisController::class);
     Route::resource('ownership', \App\Http\Controllers\OwnershipController::class);
     Route::resource('herd', \App\Http\Controllers\HerdController::class);
     Route::resource('vaccination', \App\Http\Controllers\VaccincationController::class);
