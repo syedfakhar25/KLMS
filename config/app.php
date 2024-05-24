@@ -120,6 +120,7 @@ return [
     | will not be safe. Please do this before deploying an application!
     |
     */
+    'migration_token' => env('MIGRATION_TOKEN', null),
 
     'key' => env('APP_KEY'),
 
