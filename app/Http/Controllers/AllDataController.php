@@ -32,7 +32,7 @@ class AllDataController extends Controller
         $districts= [];
         foreach ($districtsResult as $district) {
             // $districts[$district->id] = $district->district_name;
-            $districts[] = ['key' => $district->id, 'value' => $district->district_name];
+            $districts[] = ['key' => $district->id, 'value' => $district->district_name, 'parent_id'=>$district->division_id];
 
         }
 
@@ -57,14 +57,14 @@ class AllDataController extends Controller
         $tehsils=[];
         foreach ($tehsilsResult as $tehsil) {
             // $tehsils[$tehsil->id] = $tehsil->tehsil_name;
-            $tehsils[] = ['key' => $tehsil->id, 'value' => $tehsil->tehsil_name, 'parent_id'=>$village->district_id];
+            $tehsils[] = ['key' => $tehsil->id, 'value' => $tehsil->tehsil_name, 'parent_id'=>$tehsil->district_id];
         }
 
 // Organize council data into key-value pairs
         $councils=[];
         foreach ($councilsResult as $council) {
             // $councils[$council->id] = $council->council_name;
-            $councils[] = ['key' => $council->id, 'value' => $council->council_name, 'parent_id'=>$village->tehsil_id];
+            $councils[] = ['key' => $council->id, 'value' => $council->council_name, 'parent_id'=>$council->tehsil_id];
         }
 
 // Fetch data for species, productions, species_productions, and breeds
@@ -103,7 +103,7 @@ class AllDataController extends Controller
         $breeds=[];
         foreach ($breedsResult as $breed) {
             // $breeds[$breed->id] = $breed->name;
-            $productions[] = ['key' => $breed->id, 'value' => $breed->name, 'parent_id'=>$village->specie_id];
+            $productions[] = ['key' => $breed->id, 'value' => $breed->name, 'parent_id'=>$breed->specie_id];
 
         }
 
