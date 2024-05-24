@@ -7,7 +7,12 @@ use Illuminate\Support\Facades\DB;
 
 class AllDataController extends Controller
 {
+
     public function allData(){
+        return response()->json(
+            [ 'yes'
+            ],
+            200);
         /*$districts = DB::select('SELECT * FROM districts');
         $divisions = DB::select('SELECT * FROM divisions');
         $villages = DB::select('SELECT * FROM villages');
