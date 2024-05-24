@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('herds', function (Blueprint $table) {
-            $table->integer('premesis_id')->nullable();
+        Schema::create('premises_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('type');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('herds', function (Blueprint $table) {
-            $table->dropColumn('premesis_id');
-        });
+        Schema::dropIfExists('premises_types');
     }
 };

@@ -27,7 +27,7 @@ class AllDataController extends Controller
         $villagesResult = DB::select('SELECT * FROM villages');
         $tehsilsResult = DB::select('SELECT * FROM tehsils');
         $councilsResult = DB::select('SELECT * FROM councils');
-        $premesestypeResult = DB::select('SELECT * FROM premeses_type');
+        $premesestypeResult = DB::select('SELECT * FROM premises_types');
 
 // Organize district data into key-value pairs
         $districts= [];
