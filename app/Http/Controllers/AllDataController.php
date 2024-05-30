@@ -71,7 +71,7 @@ class AllDataController extends Controller
         $premesesTypes=[];
         foreach ($premesestypeResult as $type) {
             // $councils[$council->id] = $council->council_name;
-            $premesesTypes[] = ['key' => $type->id, 'value' => $type->name];
+            $premesesTypes[] = ['key' => $type->id, 'value' => $type->type];
         }
 
 // Fetch data for species, productions, species_productions, and breeds
