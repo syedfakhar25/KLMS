@@ -30,5 +30,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // send general data:
     Route::get('/settings', [\App\Http\Controllers\AllDataController::class, 'allData'])->name('settings');
+    Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
 });
 Route::middleware('auth:sanctum')->post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
