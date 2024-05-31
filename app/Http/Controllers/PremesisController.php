@@ -40,14 +40,10 @@ class PremesisController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json(
-            ['premises' => $request->all()],
-            200);
 
 
 
 
-            
         $premise = premesis::create($request->all());
         if ($request->hasFile('image')) {
               // Get the image file from the request
