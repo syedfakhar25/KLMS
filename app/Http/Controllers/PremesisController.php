@@ -13,13 +13,15 @@ class PremesisController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        $premises = premesis::all();
-
+        $user = Auth::user();
+        $premises = Premesis::where('user_id', $user->id)->get();
         return response()->json(
             ['premises' => $premises],
-            200);
+            200
+        );
     }
 
     /**
