@@ -28,6 +28,7 @@ class premesis extends Model
         'vet_contact',
         'assistant_name',
         'assistant_contact',
+        'address',
     ];
 
     public function ownership()
