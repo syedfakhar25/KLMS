@@ -110,7 +110,7 @@ class AllDataController extends Controller
         $breeds=[];
         foreach ($breedsResult as $breed) {
             // $breeds[$breed->id] = $breed->name;
-            $productions[] = ['key' => $breed->id, 'value' => $breed->name, 'parent_id'=>$breed->specie_id];
+            $breeds[] = ['key' => $breed->id, 'value' => $breed->name, 'parent_id'=>$breed->specie_id];
 
         }
 
