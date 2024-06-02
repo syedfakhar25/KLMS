@@ -76,8 +76,8 @@ class AllDataController extends Controller
 
 // Fetch data for species, productions, species_productions, and breeds
         $speciesResult = DB::select('SELECT * FROM species');
-        $productionsResult = DB::select('SELECT * FROM productions');
-        $speciesProductionsResult = DB::select('SELECT * FROM species_productions');
+        $productionsResult = DB::select('SELECT sp.production_id, sp.specie_id, p.name AS production_name FROM species_productions sp JOIN productions p ON sp.production_id = p.id');
+        // $speciesProductionsResult = DB::select('SELECT * FROM species_productions');
         $breedsResult = DB::select('SELECT * FROM breeds');
 
 // Organize species data into key-value pairs
@@ -89,23 +89,34 @@ class AllDataController extends Controller
         }
 
 // Organize production data into key-value pairs
-        $productions=[];
-        foreach ($productionsResult as $production) {
-            // $productions[$production->id] = $production->name;
-            $productions[] = ['key' => $production->id, 'value' => $production->name];
+        // $productions=[];
+        // foreach ($productionsResult as $production) {
+        //     // $productions[$production->id] = $production->name;
+        //     $productions[] = ['key' => $production->id, 'value' => $production->name];
 
-        }
+        // }
 
-        $speciesProductions=[];
+//         $speciesProductions=[];
 
-// Organize species productions data into key-value pairs
-        foreach ($speciesProductionsResult as $speciesProduction) {
-            // Assuming species_productions table has a unique id field
-            $speciesProductions[$speciesProduction->id] = [
-                'species_id' => $speciesProduction->specie_id,
-                'production_id' => $speciesProduction->production_id
-            ];
-        }
+// // Organize species productions data into key-value pairs
+//         foreach ($speciesProductionsResult as $speciesProduction) {
+//             // Assuming species_productions table has a unique id field
+//             $speciesProductions[$speciesProduction->id] = [
+//                 'species_id' => $speciesProduction->specie_id,
+//                 'production_id' => $speciesProduction->production_id
+//             ];
+//         }
+
+        $productions = [];
+foreach ($productionsResult as $row) {
+    $productions[] = [
+        'key' => $row->production_id,
+        'value' => $row->production_name,
+        'parent_id' => $row->specie_id
+    ];
+}
+
+ 
 
 // Organize breed data into key-value pairs
         $breeds=[];
@@ -128,9 +139,7 @@ class AllDataController extends Controller
                 'premices' => $premesesTypes,
                 'species' => $species,
                 'productions' => $productions,
-                'species_productions' => $speciesProductions,
                 'breeds' => $breeds,
-
             ],
             200);
     }
