@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('premeses', function (Blueprint $table) {
-            $table->integer('address')->nullable();
+            $table->string('address')->nullable();
         });
     }
 
