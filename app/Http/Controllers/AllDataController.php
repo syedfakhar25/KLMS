@@ -75,7 +75,6 @@ class AllDataController extends Controller
         }
 
 // Fetch data for species, productions, species_productions, and breeds
-        $species = $productions = $speciesProductions = $breeds = [];
         $speciesResult = DB::select('SELECT * FROM species');
         $productionsResult = DB::select('SELECT * FROM productions');
         $speciesProductionsResult = DB::select('SELECT * FROM species_productions');
@@ -96,6 +95,8 @@ class AllDataController extends Controller
             $productions[] = ['key' => $production->id, 'value' => $production->name];
 
         }
+
+        $speciesProductions=[];
 
 // Organize species productions data into key-value pairs
         foreach ($speciesProductionsResult as $speciesProduction) {
