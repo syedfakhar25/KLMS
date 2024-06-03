@@ -59,10 +59,9 @@ class OwnershipController extends Controller
     public function show($id)
     {
         $ownership = Owenership::where('premises_id', $id)->get();
-        return response()->json(
-            [($id) => ['ownership' => $ownership]],
-            200
-        );
+        return response()->json([
+            $id => ['ownership' => $ownership]
+        ], 200);
     }
 
     /**
