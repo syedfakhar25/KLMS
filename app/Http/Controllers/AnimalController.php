@@ -75,7 +75,7 @@ class AnimalController extends Controller
  
         $animal = Animal::where('premesis_id', $id)->get();
         return response()->json([
-            $id => ['herd' => $animal]
+            $id => ['animal' => $animal]
         ], 200);
     }
 
