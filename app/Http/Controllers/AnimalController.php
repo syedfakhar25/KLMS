@@ -72,12 +72,11 @@ class AnimalController extends Controller
      */
     public function show($id)
     {
-        $animal = Animal::find($id);
-
-        return response()->json(
-            ['animal' => $animal],
-            200
-        );
+ 
+        $animal = Animal::where('premesis_id', $id)->get();
+        return response()->json([
+            $id => ['herd' => $animal]
+        ], 200);
     }
 
     /**

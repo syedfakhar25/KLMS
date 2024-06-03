@@ -65,11 +65,12 @@ class HerdController extends Controller
      */
     public function show($id)
     {
-        $herd = Herd::find($id);
 
-        return response()->json(
-            ['herd' => $herd],
-            200);
+        $herd = Herd::where('premesis_id', $id)->get();
+        return response()->json([
+            $id => ['herd' => $herd]
+        ], 200);
+
     }
 
     /**
