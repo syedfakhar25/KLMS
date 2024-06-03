@@ -18,7 +18,8 @@ class OwnershipController extends Controller
 
         return response()->json(
             ['ownership' => $ownership],
-            200);
+            200
+        );
     }
 
     /**
@@ -39,13 +40,14 @@ class OwnershipController extends Controller
      */
     public function store(Request $request)
     {
-      //  dd('here');
+        //  dd('here');
 
         $ownership = Owenership::create($request->all());
-       // dd($ownership);
+        // dd($ownership);
         return response()->json(
             ['ownership' => $ownership],
-            200);
+            200
+        );
     }
 
     /**
@@ -56,11 +58,11 @@ class OwnershipController extends Controller
      */
     public function show($id)
     {
-        $ownership = Owenership::find($id);
-
+        $ownership = Owenership::where('premises_id', $id)->get();
         return response()->json(
-            ['ownership' => $ownership],
-            200);
+            [($id) => ['ownership' => $ownership]],
+            200
+        );
     }
 
     /**
@@ -83,12 +85,13 @@ class OwnershipController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ownership= Owenership::find($id);
+        $ownership = Owenership::find($id);
         $ownership->update($request->all());
 
         return response()->json(
             ['ownership' => $ownership],
-            200);
+            200
+        );
     }
 
     /**
@@ -99,7 +102,7 @@ class OwnershipController extends Controller
      */
     public function destroy($id)
     {
-        $ownership= Owenership::find($id);
+        $ownership = Owenership::find($id);
         $ownership->delete();
 
         return response()->json(['message' => 'Ownership deleted successfully']);
