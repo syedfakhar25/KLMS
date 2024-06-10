@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 class AuthController extends Controller
@@ -31,16 +30,12 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $validatedData = $request->validate([
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-
-        $otp = rand(100000, 999999); // Generate a 6-digit OTP
+     
+        $otp = rand(100000, 999999); 
 
         $user = User::create([
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
             'otp' => $otp,
         ]);
 
