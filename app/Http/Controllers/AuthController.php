@@ -32,23 +32,19 @@ class AuthController extends Controller
     public function register(Request $request)
     {
 
-        $user = User::where('email',  $request->input('email'))->first();
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
 
-        if ($user) {
-            return response()->json(['error' => 
-            ['email'=>
-            'User already registered']], 404);
-        }
-
-        $otp = rand(100000, 999999); // Generate a 6-digit OTP
-
+        $otp = rand(100000, 999999);
         $user = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
             'otp' => $otp,
-            'otp_expires_at' => Carbon::now()->addMinutes(10),
-            'email_verified' => 0
+            'otp_expires_at' => Carbon::now()->addMinutes(10)
         ]);
 
         $this->sendOtp($user);
@@ -59,7 +55,7 @@ class AuthController extends Controller
     public function resendOtp(Request $request)
     {
         $validatedData = $request->validate([
-            'email' => 'required|string|email|max:255',
+            'email' => 'required|string|email|max:255|exists:users',
         ]);
 
         $user = User::where('email', $validatedData['email'])->first();
@@ -75,17 +71,9 @@ class AuthController extends Controller
     public function verifyOtp(Request $request)
     {
         $validatedData = $request->validate([
-            'email' => 'required|string|email|max:255',
+            'email' => 'required|string|email|max:255|exists:users',
             'otp' => 'required|string|min:6|max:6',
         ]);
-
-        // Handle validation failures
-        if ($validatedData->fails()) {
-            return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $validatedData->errors()
-            ], 422);
-        }
 
         $user = User::where('email', $validatedData['email'])->first();
 
