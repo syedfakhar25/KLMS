@@ -27,6 +27,9 @@ class User extends Authenticatable
         'uc',
         'village',
         'role_id',
+        'otp',
+        'otp_expires_at',
+        'email_verified'
     ];
 
     /**
