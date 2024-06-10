@@ -49,7 +49,7 @@ class AuthController extends Controller
             'email_verified' => 0
         ]);
 
-        // $this->sendOtp($user);
+        $this->sendOtp($user);
 
         return response()->json(['message' => 'OTP sent to your email. Please verify.'], 201);
     }
