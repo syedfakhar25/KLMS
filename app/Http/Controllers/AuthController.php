@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 class AuthController extends Controller
 {
     public function login(Request $request)
@@ -27,13 +29,81 @@ class AuthController extends Controller
         return response()->json(['message' => 'Unauthorized'], 401);
     }
 
+    public function register(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $otp = rand(100000, 999999); // Generate a 6-digit OTP
+
+        $user = User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+            'otp' => $otp,
+            'otp_expires_at' => Carbon::now()->addMinutes(10)
+        ]);
+
+        $this->sendOtp($user);
+
+        return response()->json(['message' => 'OTP sent to your email. Please verify.'], 201);
+    }
+
+    public function sendOtp(User $user)
+    {
+        $otp = rand(100000, 999999); // Generate a 6-digit OTP
+        $user->otp = $otp;
+        $user->otp_expires_at = Carbon::now()->addMinutes(10); // OTP valid for 10 minutes
+        $user->save();
+
+        // Send OTP via email
+        Mail::raw("Your OTP code is $otp", function ($message) use ($user) {
+            $message->to($user->email)
+                ->subject('OTP Verification');
+        });
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        $validatedData = $request->validate([
+            'email' => 'required|string|email|max:255',
+            'otp' => 'required|string|min:6|max:6',
+        ]);
+
+        $user = User::where('email', $validatedData['email'])->first();
+
+        if (!$user || $user->otp !== $validatedData['otp'] || Carbon::now()->isAfter($user->otp_expires_at)) {
+            return response()->json(['message' => 'Invalid OTP or OTP expired'], 401);
+        }
+
+        // OTP is valid, generate token
+        $user->otp = null;
+        $user->otp_expires_at = null;
+        $user->email_verified = true;
+        $user->save();
+
+        $token = $user->createToken('authToken')->plainTextToken;
+
+        return response()->json(
+            [
+                'token' => $token,
+                'user' => $user
+            ],
+            200
+        );
+    }
+
     public function getUser(){
-        $user = \App\Models\User::all();
+        $user = User::all();
 
         return response()->json(
             ['users' => $user],
             200);
     }
+
     public function logout(Request $request)
     {
         $user = $request->user();
