@@ -29,9 +29,8 @@ class AuthController extends Controller
         return response()->json(['message' => 'Unauthorized'], 401);
     }
 
-    public function signUp(Request $request)
+    public function register(Request $request)
     {
-     
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -47,8 +46,6 @@ class AuthController extends Controller
             'otp' => $otp,
             'otp_expires_at' => Carbon::now()->addMinutes(10)
         ]);
-        dd($user);
-        
 
         // $this->sendOtp($user);
 
