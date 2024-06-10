@@ -40,7 +40,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->input('password')),
             'otp' => $otp,
             'otp_expires_at' => Carbon::now()->addMinutes(10),
-            'email_verified' => false
+            'email_verified' => 0
         ]);
 
         // $this->sendOtp($user);
