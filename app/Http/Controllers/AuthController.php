@@ -42,10 +42,9 @@ class AuthController extends Controller
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
             'otp' => $otp,
-            'otp_expires_at' => Carbon::now()->addMinutes(10)
         ]);
 
-        $this->sendOtp($user);
+        // $this->sendOtp($user);
 
         return response()->json(['message' => 'OTP sent to your email. Please verify.'], 201);
     }
@@ -101,7 +100,6 @@ class AuthController extends Controller
     {
         $otp = rand(100000, 999999); // Generate a 6-digit OTP
         $user->otp = $otp;
-        $user->otp_expires_at = Carbon::now()->addMinutes(10); // OTP valid for 10 minutes
         $user->save();
 
         // Send OTP via email
