@@ -44,6 +44,7 @@ class AuthController extends Controller
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
             'otp' => $otp,
+            'email_verified' => false,
             'otp_expires_at' => Carbon::now()->addMinutes(10)
         ]);
 
