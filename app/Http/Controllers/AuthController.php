@@ -68,7 +68,6 @@ class AuthController extends Controller
 
         $this->sendOtp($user);
 
-        return response()->json(['message' => 'OTP resent to your email. Please verify.'], 200);
     }
 
     public function verifyOtp(Request $request)
@@ -106,15 +105,14 @@ class AuthController extends Controller
         $otp = rand(100000, 999999); // Generate a 6-digit OTP
         $user->otp = $otp;
         $user->save();
-
-        dd($user);
-
         // Send OTP via email
         Mail::raw("Your OTP code is $otp", function ($message) use ($user) {
             $message->to($user->email)
                     ->from('info@livestockajk.gov.pk', 'LiveStock AJ&K') // Add this line
                     ->subject('OTP Verification');
         });
+
+        return response()->json(['message' => 'OTP resent to your email. Please verify.'], 200);
     }
 
     public function getUser(){
