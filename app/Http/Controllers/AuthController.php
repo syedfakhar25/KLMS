@@ -47,6 +47,8 @@ class AuthController extends Controller
             'otp' => $otp,
             'otp_expires_at' => Carbon::now()->addMinutes(10)
         ]);
+        dd($user);
+        
 
         // $this->sendOtp($user);
 
