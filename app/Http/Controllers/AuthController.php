@@ -29,7 +29,7 @@ class AuthController extends Controller
         return response()->json(['message' => 'Unauthorized'], 401);
     }
 
-    public function register(Request $request)
+    public function signUp(Request $request)
     {
      
         $validatedData = $request->validate([
