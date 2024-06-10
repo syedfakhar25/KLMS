@@ -32,7 +32,6 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
@@ -40,7 +39,6 @@ class AuthController extends Controller
         $otp = rand(100000, 999999); // Generate a 6-digit OTP
 
         $user = User::create([
-            'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
             'otp' => $otp,
@@ -78,7 +76,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $validatedData['email'])->first();
 
-        if (!$user || $user->otp !== $validatedData['otp'] || Carbon::now()->isAfter($user->otp_expires_at)) {
+        if (!$user || $user->otp !== $validatedData['otp']) {
             return response()->json(['message' => 'Invalid OTP or OTP expired'], 401);
         }
 

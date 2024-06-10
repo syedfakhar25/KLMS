@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
-Route::get('login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
-Route::post('register', [\App\Http\Controllers\AuthController::class, 'register']);
-Route::post('verify-otp', [\App\Http\Controllers\AuthController::class, 'verifyOtp']);
-Route::post('resend-otp', [\App\Http\Controllers\AuthController::class, 'resendOtp']);
+Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
+Route::get('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
+Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
+Route::post('/verify-otp', [\App\Http\Controllers\AuthController::class, 'verifyOtp']);
+Route::post('/resend-otp', [\App\Http\Controllers\AuthController::class, 'resendOtp']);
 
 
 
@@ -35,7 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('animal', \App\Http\Controllers\AnimalController::class);
 
     // send general data:
-    Route::get('settings', [\App\Http\Controllers\AllDataController::class, 'allData'])->name('settings');
-    Route::get('dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/settings', [\App\Http\Controllers\AllDataController::class, 'allData'])->name('settings');
+    Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
 });
 Route::middleware('auth:sanctum')->post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
