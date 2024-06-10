@@ -13,6 +13,13 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
+        return response()->json(
+            [
+                'token' => $credentials,
+                'user' => $credentials
+            ],
+            200);
+
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $token = $user->createToken('authToken')->plainTextToken;
