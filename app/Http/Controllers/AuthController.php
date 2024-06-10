@@ -38,12 +38,10 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        $otp = rand(100000, 999999);
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
-            'otp' => $otp,
             'email_verified' => false,
             'otp_expires_at' => Carbon::now()->addMinutes(10)
         ]);
@@ -105,10 +103,10 @@ class AuthController extends Controller
         $user->otp = $otp;
         $user->save();
         // Send OTP via email
-        Mail::raw("Your OTP code is $otp", function ($message) use ($user) {
-            $message->to($user->email)
-                    ->subject('OTP Verification');
-        });
+        // Mail::raw("Your OTP code is $otp", function ($message) use ($user) {
+        //     $message->to($user->email)
+        //             ->subject('OTP Verification');
+        // });
 
         return response()->json(['message' => 'OTP resent to your email. Please verify.'], 200);
     }
