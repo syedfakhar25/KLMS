@@ -107,10 +107,13 @@ class AuthController extends Controller
         $user->otp = $otp;
         $user->save();
 
+        dd($user);
+
         // Send OTP via email
         Mail::raw("Your OTP code is $otp", function ($message) use ($user) {
             $message->to($user->email)
-                ->subject('OTP Verification');
+                    ->from('info@livestockajk.gov.pk', 'LiveStock AJ&K') // Add this line
+                    ->subject('OTP Verification');
         });
     }
 
