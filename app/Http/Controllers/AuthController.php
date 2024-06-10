@@ -34,6 +34,7 @@ class AuthController extends Controller
         $otp = rand(100000, 999999); 
 
         $user = User::create([
+            'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'otp' => $otp,
