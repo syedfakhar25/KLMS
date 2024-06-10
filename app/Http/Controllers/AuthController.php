@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+// use Illuminate\Support\Facades\Auth;
+// use App\Models\User;
+use http\Client\Curl\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 class AuthController extends Controller
@@ -12,13 +13,6 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-
-        return response()->json(
-            [
-                'token' => $credentials,
-                'user' => $credentials
-            ],
-            200);
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
