@@ -35,7 +35,9 @@ class AuthController extends Controller
         $user = User::where('email',  $request->input('email'))->first();
 
         if ($user) {
-            return response()->json(['message' => 'User already registered'], 401);
+            return response()->json(['error' => 
+            ['email'=>
+            'User already registered']], 404);
         }
 
         $otp = rand(100000, 999999); // Generate a 6-digit OTP
@@ -77,6 +79,14 @@ class AuthController extends Controller
             'otp' => 'required|string|min:6|max:6',
         ]);
 
+        // Handle validation failures
+        if ($validatedData->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validatedData->errors()
+            ], 422);
+        }
+
         $user = User::where('email', $validatedData['email'])->first();
 
         if (!$user || $user->otp !== $validatedData['otp']) {
@@ -108,7 +118,6 @@ class AuthController extends Controller
         // Send OTP via email
         Mail::raw("Your OTP code is $otp", function ($message) use ($user) {
             $message->to($user->email)
-                    ->from('info@livestockajk.gov.pk', 'LiveStock AJ&K') // Add this line
                     ->subject('OTP Verification');
         });
 
