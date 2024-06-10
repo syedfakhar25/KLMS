@@ -52,18 +52,21 @@ class AuthController extends Controller
         return response()->json(['message' => 'OTP sent to your email. Please verify.'], 201);
     }
 
-    public function sendOtp(User $user)
+    public function resendOtp(Request $request)
     {
-        $otp = rand(100000, 999999); // Generate a 6-digit OTP
-        $user->otp = $otp;
-        $user->otp_expires_at = Carbon::now()->addMinutes(10); // OTP valid for 10 minutes
-        $user->save();
+        $validatedData = $request->validate([
+            'email' => 'required|string|email|max:255',
+        ]);
 
-        // Send OTP via email
-        Mail::raw("Your OTP code is $otp", function ($message) use ($user) {
-            $message->to($user->email)
-                ->subject('OTP Verification');
-        });
+        $user = User::where('email', $validatedData['email'])->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $this->sendOtp($user);
+
+        return response()->json(['message' => 'OTP resent to your email. Please verify.'], 200);
     }
 
     public function verifyOtp(Request $request)
@@ -94,6 +97,20 @@ class AuthController extends Controller
             ],
             200
         );
+    }
+
+    public function sendOtp(User $user)
+    {
+        $otp = rand(100000, 999999); // Generate a 6-digit OTP
+        $user->otp = $otp;
+        $user->otp_expires_at = Carbon::now()->addMinutes(10); // OTP valid for 10 minutes
+        $user->save();
+
+        // Send OTP via email
+        Mail::raw("Your OTP code is $otp", function ($message) use ($user) {
+            $message->to($user->email)
+                ->subject('OTP Verification');
+        });
     }
 
     public function getUser(){
