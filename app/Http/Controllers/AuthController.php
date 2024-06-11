@@ -13,8 +13,13 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|email|max:255|exists:users',
-            'password' => 'required|string|min:8|confirmed',
+            'email' => 'required|max:255|exists:users',
+            'password' => 'required|min:8',
+        ], [
+            'email.required' => 'The email field is required.',
+            'email.exists' => 'This email is not registered in our system.',
+            'password.required' => 'The password field is required.',
+            'password.min' => 'The password must be at least 8 characters.',
         ]);
 
         $credentials = $request->only('email', 'password');
