@@ -103,7 +103,7 @@ class AuthController extends Controller
         if (!$user || $user->otp !== $validatedData['otp']) {
             return response()->json([
                 'errors' => [
-                    'otb' => ['Invalid OTP or OTP expired']
+                    'otp' => ['Invalid OTP or OTP expired']
                 ]
             ], 422);
         }
