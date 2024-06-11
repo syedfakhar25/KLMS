@@ -12,6 +12,11 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
+        $request->validate([
+            'email' => 'required|string|email|max:255|exists:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
@@ -26,7 +31,11 @@ class AuthController extends Controller
                 200);
         }
 
-        return response()->json(['message' => 'Unauthorized'], 401);
+        return response()->json([
+            'errors' => [
+                'password' => ['Incorect Password']
+            ]
+        ], 422);
     }
 
     public function register(Request $request)
@@ -87,7 +96,11 @@ class AuthController extends Controller
         $user = User::where('email', $validatedData['email'])->first();
 
         if (!$user || $user->otp !== $validatedData['otp']) {
-            return response()->json(['message' => 'Invalid OTP or OTP expired'], 401);
+            return response()->json([
+                'errors' => [
+                    'otb' => ['Invalid OTP or OTP expired']
+                ]
+            ], 422);
         }
 
         // OTP is valid, generate token
