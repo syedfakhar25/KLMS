@@ -48,9 +48,11 @@ class PremesisController extends Controller
         $user = Auth::user();
         if(!$user->role_id){ 
             $premise->status = 0;
-            $premise->save();
         }
+        else $premise->status = 1;
+        $premise->save();
         return response()->json(
+            
             ['premises' => $premise],
             200);
     }
