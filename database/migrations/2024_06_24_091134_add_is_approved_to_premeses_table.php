@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('premesis', function (Blueprint $table) {
+        Schema::table('premeses', function (Blueprint $table) {
             $table->boolean('is_approved')->default(false);
         });
     }
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('premesis', function (Blueprint $table) {
+        Schema::table('premeses', function (Blueprint $table) {
             $table->dropColumn('is_approved');
         });
     }
