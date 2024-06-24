@@ -18,6 +18,7 @@ class PremesisController extends Controller
     {
         $user = Auth::user();
         $premises = Premesis::where('user_id', $user->id)->get();
+    
         return response()->json(
             ['premises' => $premises],
             200
@@ -44,7 +45,11 @@ class PremesisController extends Controller
     {
 
         $premise = premesis::create($request->all());
-       
+        $user = Auth::user();
+        if(!$user->role_id){ 
+            $premise->status = 0;
+            $premise->save();
+        }
         return response()->json(
             ['premises' => $premise],
             200);
