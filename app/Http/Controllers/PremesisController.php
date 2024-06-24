@@ -17,7 +17,9 @@ class PremesisController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $premises = Premesis::where('user_id', $user->id)->get();
+        $premises = Premesis::where('user_id', $user->id)
+                    ->orderBy('created_at', 'asc') 
+                    ->get();    
     
         return response()->json(
             ['premises' => $premises],
