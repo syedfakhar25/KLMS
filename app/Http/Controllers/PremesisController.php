@@ -46,13 +46,11 @@ class PremesisController extends Controller
 
         $premise = premesis::create($request->all());
         $user = Auth::user();
-        if(!$user->role_id){ 
-            $premise->status = 0;
+        if($user->role_id){ 
+            $premise->is_approved = true;
         }
-        else $premise->status = 1;
         $premise->save();
         return response()->json(
-            
             ['premises' => $premise],
             200);
     }

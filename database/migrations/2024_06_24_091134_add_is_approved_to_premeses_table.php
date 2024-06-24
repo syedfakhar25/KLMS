@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('otp')->nullable();
-            $table->timestamp('otp_expires_at')->nullable();
-            $table->boolean('email_verified')->default(false);
+        Schema::table('premesis', function (Blueprint $table) {
+            $table->boolean('is_approved')->default(false);
         });
     }
 
@@ -28,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['otp', 'otp_expires_at', 'email_verified']);
+        Schema::table('premesis', function (Blueprint $table) {
+            $table->dropColumn('is_approved');
         });
     }
 };

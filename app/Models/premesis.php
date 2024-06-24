@@ -29,6 +29,7 @@ class premesis extends Model
         'assistant_name',
         'assistant_contact',
         'address',
+        'is_approved'
     ];
 
     public function ownership()
