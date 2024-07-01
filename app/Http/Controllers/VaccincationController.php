@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vaccination;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VaccincationController extends Controller
 {
@@ -39,7 +40,11 @@ class VaccincationController extends Controller
      */
     public function store(Request $request)
     {
-
+        $vaccination = Vaccination::create($request->all());
+        $vaccination->save();
+        return response()->json(
+            ['vaccination' => $vaccination],
+            200);
     }
 
     /**
