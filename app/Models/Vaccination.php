@@ -11,6 +11,7 @@ class Vaccination extends Model
 
     protected $fillable=[
         'specie',
+        'premises_id',
         'vacc_type',
         'vacc_name',
         'feed_type',
