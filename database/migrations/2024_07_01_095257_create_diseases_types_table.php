@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('disease_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('parent_id')->constrained('species')->onDelete('cascade');
+            $table->foreignId('parent_id');
         });
     }
 
