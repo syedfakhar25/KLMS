@@ -58,7 +58,7 @@ class VaccincationController extends Controller
      */
     public function show($id)
     {
-        $vaccination = Vaccination::where('premesis_id', $id)->get();
+        $vaccination = Vaccination::where('premeses_id', $id)->get();
         return response()->json([
             $id => ['vaccination' => $vaccination]
         ], 200);
