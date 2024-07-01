@@ -83,6 +83,16 @@ class AllDataController extends Controller
             $breeds[] = ['key' => $breed->id, 'value' => $breed->name, 'parent_id' => $breed->specie_id];
         }
 
+        $diseases = [];
+        foreach ($diseases as $breed) {
+            $breeds[] = ['key' => $breed->id, 'value' => $breed->name, 'parent_id' => $breed->specie_id];
+        }
+
+        $vaccinations = [];
+        foreach ($vaccinationtype as $breed) {
+            $vaccinations[] = ['key' => $breed->id, 'value' => $breed->name, 'parent_id' => $breed->specie_id];
+        }
+
         return response()->json(
             [
                 'divisions' => $divisions,
@@ -94,8 +104,8 @@ class AllDataController extends Controller
                 'species' => $species,
                 'productions' => $productions,
                 'breeds' => $breeds,
-                'diseases' => $diseasetype,
-                'vaccinations' => $vaccinationtype,
+                'diseases' => $diseases,
+                'vaccinations' => $vaccinations,
             ],
             200
         );
