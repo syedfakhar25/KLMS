@@ -84,7 +84,7 @@ class AllDataController extends Controller
         }
 
         $diseases = [];
-        foreach ($diseases as $breed) {
+        foreach ($diseasetype as $breed) {
             $breeds[] = ['key' => $breed->id, 'value' => $breed->name, 'parent_id' => $breed->specie_id];
         }
 
