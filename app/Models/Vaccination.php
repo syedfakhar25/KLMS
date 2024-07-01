@@ -15,6 +15,7 @@ class Vaccination extends Model
         'vacc_name',
         'feed_type',
         'sub_type',
+        'animals',
         'date',
     ];
 
