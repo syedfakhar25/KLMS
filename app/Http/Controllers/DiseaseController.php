@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Animal;
+use App\Models\Disease;
+use App\Models\Vaccination;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class AnimalController extends Controller
+class DiseaseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +16,11 @@ class AnimalController extends Controller
      */
     public function index()
     {
-        $animal = Animal::all();
+        $disease = Disease::all();
 
         return response()->json(
-            ['animal' => $animal],
-            200
-        );
+            ['disease' => $disease],
+            200);
     }
 
     /**
@@ -29,7 +30,7 @@ class AnimalController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -40,28 +41,14 @@ class AnimalController extends Controller
      */
     public function store(Request $request)
     {
-        //  dd('here');
-
-        $animal = Animal::create($request->all());
-
-        if ($request->hasFile('image')) {
-            // Get the image file from the request
-            $image = $request->file('image');
-            $imagePath = 'images/animal';
-
-            $imageName = time() . '_' . $image->getClientOriginalName();
-
-            $image->move(public_path($imagePath), $imageName);
-
-            $imageURL = url($imagePath . '/' . $imageName);
-
-            $animal->update(['image' => $imageURL]);
-        }
-        // dd($animal);
+        // return response()->json(
+        //     ['disease' => $request->animals],
+        //     200);
+        $disease = Disease::create($request->all());
+        $disease->save();
         return response()->json(
-            ['animal' => $animal],
-            200
-        );
+            ['disease' => $disease],
+            200);
     }
 
     /**
@@ -72,12 +59,11 @@ class AnimalController extends Controller
      */
     public function show($id)
     {
- 
-        $animal = Animal::where('premesis_id', $id)
+        $disease = Disease::where('premises_id', $id)
         ->orderBy('created_at', 'desc') 
         ->get();
         return response()->json([
-            $id => ['animal' => $animal]
+            $id => ['disease' => $disease]
         ], 200);
     }
 
@@ -101,13 +87,7 @@ class AnimalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $animal = Animal::find($id);
-        $animal->update($request->all());
-
-        return response()->json(
-            ['animal' => $animal],
-            200
-        );
+        //
     }
 
     /**
@@ -118,9 +98,6 @@ class AnimalController extends Controller
      */
     public function destroy($id)
     {
-        $animal = Animal::find($id);
-        $animal->delete();
-
-        return response()->json(['message' => 'Animal deleted successfully']);
+        //
     }
 }
