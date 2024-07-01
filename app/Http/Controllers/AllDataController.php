@@ -85,12 +85,12 @@ class AllDataController extends Controller
 
         $diseases = [];
         foreach ($diseasetype as $breed) {
-            $breeds[] = ['key' => $breed->id, 'value' => $breed->name, 'parent_id' => $breed->specie_id];
+            $breeds[] = ['key' => $breed->id, 'value' => $breed->name, 'parent_id' => $breed->parent_id];
         }
 
         $vaccinations = [];
         foreach ($vaccinationtype as $breed) {
-            $vaccinations[] = ['key' => $breed->id, 'value' => $breed->name, 'parent_id' => $breed->specie_id];
+            $vaccinations[] = ['key' => $breed->id, 'value' => $breed->name, 'parent_id' => $breed->parent_id];
         }
 
         return response()->json(
