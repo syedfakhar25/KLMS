@@ -18,6 +18,8 @@ class AllDataController extends Controller
         $tehsilsResult = DB::select('SELECT * FROM tehsils');
         $councilsResult = DB::select('SELECT * FROM councils');
         $premesestypeResult = DB::select('SELECT * FROM premises_types');
+        $diseasetype = DB::select('SELECT * FROM disease_types');
+        $vaccinationtype = DB::select('SELECT * FROM vaccination_type');
 
         // Organize district data into key-value pairs
         $districts = [];
@@ -92,6 +94,8 @@ class AllDataController extends Controller
                 'species' => $species,
                 'productions' => $productions,
                 'breeds' => $breeds,
+                'diseases' => $diseasetype,
+                'vaccinations' => $vaccinationtype,
             ],
             200
         );
