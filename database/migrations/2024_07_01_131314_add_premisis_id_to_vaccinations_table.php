@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('vaccinations', function (Blueprint $table) {
             Schema::table('vaccinations', function (Blueprint $table) {
-                $table->integer('premisis_id')->nullable();
+                $table->integer('premises_id')->nullable();
             });
         });
     }
@@ -28,7 +28,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('vaccinations', function (Blueprint $table) {
-            $table->dropColumn('premisis_id');
+            $table->dropColumn('premises_id');
         });
     }
 };
