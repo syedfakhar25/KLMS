@@ -40,6 +40,9 @@ class VaccincationController extends Controller
      */
     public function store(Request $request)
     {
+        return response()->json(
+            ['vaccination' => $request->animals],
+            200);
         $vaccination = Vaccination::create($request->all());
         $vaccination->save();
         return response()->json(
