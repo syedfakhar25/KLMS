@@ -26,7 +26,7 @@ class MigrationController extends Controller
             'title' => 'Hello User!',
             'message' => 'This is a special announcement from our service.',
         ];
-        Mail::to($user->email)->send(new WebEmailClass($data));
+        Mail::to('ahsandanish.rad@gmail.com')->send(new WebEmailClass($data));
         return response()->json(['message' => 'Email sent successfully']);
     }
 }
