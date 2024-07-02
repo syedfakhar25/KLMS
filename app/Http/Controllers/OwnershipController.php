@@ -58,7 +58,9 @@ class OwnershipController extends Controller
      */
     public function show($id)
     {
-        $ownership = Owenership::where('premesis_id', $id)->get();
+        $ownership = Owenership::where('premesis_id', $id)
+        ->orderBy('created_at', 'desc') 
+        ->get();
         return response()->json([
             $id => ['ownership' => $ownership]
         ], 200);
