@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WebEmailClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Mail;
 
 class MigrationController extends Controller
 {
@@ -17,5 +19,14 @@ class MigrationController extends Controller
 
         Artisan::call('migrate', ['--force' => true]);
         return response()->json(['success' => 'Migrations ran successfully']);
+    }
+    function testEmail(){ 
+        $data = [
+            'subject' => 'Special Announcement',
+            'title' => 'Hello User!',
+            'message' => 'This is a special announcement from our service.',
+        ];
+        Mail::to($user->email)->send(new WebEmailClass($data));
+        return response()->json(['message' => 'Email sent successfully']);
     }
 }

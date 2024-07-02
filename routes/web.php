@@ -18,3 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/run-migrations', [MigrationController::class, 'runMigrations']);
+Route::get('/test-email', [MigrationController::class, 'testEmail']);
