@@ -42,8 +42,9 @@ class WebEmailClass extends Mailable
     }
     public function build()
     {
+         
         return $this->subject($this->subject)
-                    ->view($this->view, compact('data'));
+                    ->view($this->view)->with($this->data);
     }
     public function attachments()
     {
