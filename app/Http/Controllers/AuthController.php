@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\WebEmailClass;
 class AuthController extends Controller
 {
     public function login(Request $request)
@@ -135,6 +136,12 @@ class AuthController extends Controller
         //     $message->to($user->email)
         //             ->subject('OTP Verification');
         // });
+        $data = [
+            'subject' => 'Live Stock OTP',
+            'otp'=> $user->otp,
+            'view' => 'emails.otp',
+        ];
+        Mail::to($user->email)->send(new WebEmailClass($data));
 
     }
 

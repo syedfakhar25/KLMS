@@ -14,9 +14,8 @@ class WebEmailClass extends Mailable
     use Queueable, SerializesModels;
 
     public $subject;
-    public $title;
-    public $message;
     public $view;
+    public $data;
 
     /**
      * Create a new message instance.
@@ -26,9 +25,8 @@ class WebEmailClass extends Mailable
     public function __construct($data)
     {
         $this->subject = $data['subject'];
-        $this->title = $data['title'];
-        $this->message = $data['message'];
         $this->view = isset($data['view']) ? $data['view'] : 'emails.default';
+        $this->data= $data;
     }
 
     /**
@@ -42,33 +40,11 @@ class WebEmailClass extends Mailable
             subject: $this->subject,
         );
     }
-
-    /**
-     * Get the message content definition.
-     *
-     * @return \Illuminate\Mail\Mailables\Content
-     */
-    public function content()
-    {
-        return new Content(
-            view:  $this->view,
-        );
-    }
     public function build()
     {
         return $this->subject($this->subject)
-                    ->view($this->view)
-                    ->with([
-                        'title' => $this->title,
-                        'message' => $this->message,
-                    ]);
+                    ->view($this->view, compact('data'));
     }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array
-     */
     public function attachments()
     {
         return [];

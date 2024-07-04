@@ -47,7 +47,7 @@
     <div class="container">
         <h2>OTP Email</h2>
         <p>Dear User,</p>
-        <p>Your OTP for verification is: <span class="otp">{{ '1234' }}</span></p>
+        <p>Your OTP for verification is: <span class="otp">{{ $otp }}</span></p>
         <p>Please use this OTP to complete your verification process.</p>
         
         <div class="footer">
