@@ -25,6 +25,7 @@ class MigrationController extends Controller
             'subject' => 'Special Announcement',
             'title' => 'Hello User!',
             'message' => 'This is a special announcement from our service.',
+            'view' => 'emails.otp',
         ];
         Mail::to('ahsandanish.rad@gmail.com')->send(new WebEmailClass($data));
         return response()->json(['message' => 'Email sent successfully']);

@@ -13,14 +13,22 @@ class WebEmailClass extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $subject;
+    public $title;
+    public $message;
+    public $view;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->subject = $data['subject'];
+        $this->title = $data['title'];
+        $this->message = $data['message'];
+        $this->view = isset($data['view']) ? $data['view'] : 'emails.default';
     }
 
     /**
@@ -31,7 +39,7 @@ class WebEmailClass extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Web Email Class',
+            subject: $this->subject,
         );
     }
 
@@ -43,8 +51,17 @@ class WebEmailClass extends Mailable
     public function content()
     {
         return new Content(
-            view: 'email.test',
+            view:  $this->view,
         );
+    }
+    public function build()
+    {
+        return $this->subject($this->subject)
+                    ->view($this->view)
+                    ->with([
+                        'title' => $this->title,
+                        'message' => $this->message,
+                    ]);
     }
 
     /**
