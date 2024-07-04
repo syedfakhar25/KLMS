@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Premesis;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function dashboard() {
+        
+        if (auth()->user()->role_id == 1) {
+            $premesis = Premesis::all();
+        }
+
         return response()->json(
             [
-                'premises' => 18,
+                'premises' => $premesis,
                 'animals' => 20,
                 'vaccination' => 30,
                 'labtest' => 20,

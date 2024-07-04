@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class premesis extends Model
+class Premesis extends Model
 {
     use HasFactory;
     public $timestamps = true;
