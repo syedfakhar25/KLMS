@@ -13,9 +13,20 @@ class AdminController extends Controller
 {
     public function dashboard() {
         $premesis= Premesis::all();
-        if (auth()->user()->role_id == 1) {
             if(auth()->user()->village){
                 $premesis= $premesis->where('village',auth()->user()->village);
+            }
+            elseif(auth()->user()->uc){
+                $premesis= $premesis->where('village',auth()->user()->uc);
+            }
+            elseif(auth()->user()->tehsil){
+                $premesis= $premesis->where('village',auth()->user()->tehsil);
+            }
+            elseif(auth()->user()->district){
+                $premesis= $premesis->where('village',auth()->user()->district);
+            }
+            elseif(auth()->user()->province){
+                $premesis= $premesis->where('village',auth()->user()->province);
             }
             $premesis_id=$premesis->pluck('id');
             $animals =Animal::wherein('premesis_id', $premesis_id); 
@@ -23,7 +34,6 @@ class AdminController extends Controller
             $diseases =Disease::wherein('premesis_id', $premesis_id); 
             $species =Specie::wherein('premesis_id', $premesis_id); 
             // $premesis = Premesis::where(['province'=>, 	'district'=>, 'tehsil'=>,'uc'=>, 'village'=>]);
-        }
 
         return response()->json(
             [
