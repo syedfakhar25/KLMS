@@ -39,7 +39,7 @@ class AdminController extends Controller
 
         return response()->json(
             [
-                'premises' => $premesis->pluck('id'),
+                'premises' => $premesis->count,
                 'animals' => $animals->count(),
                 'vaccination' => $vaccinations->count(),
                 'labtest' => '-',
