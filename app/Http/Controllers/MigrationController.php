@@ -17,12 +17,12 @@ class MigrationController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        // Artisan::call('migrate', ['--force' => true]);
-        Artisan::call('db:seed', [
-            '--class' => 'RoleSeeder',
-        ]);
-        return response()->json(['success' => 'Seeding Succefully ran successfully']);
-        // return response()->json(['success' => 'Migrations ran successfully']);
+        Artisan::call('migrate', ['--force' => true]);
+        // Artisan::call('db:seed', [
+        //     '--class' => 'RoleSeeder',
+        // ]);
+        // return response()->json(['success' => 'Seeding Succefully ran successfully']);
+        return response()->json(['success' => 'Migrations ran successfully']);
     }
     function testEmail(){ 
         $data = [
