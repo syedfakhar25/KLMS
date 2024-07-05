@@ -17,32 +17,33 @@ class AdminController extends Controller
                 $premesis= $premesis->where('village',auth()->user()->village);
             }
             elseif(auth()->user()->uc){
-                $premesis= $premesis->where('village',auth()->user()->uc);
+                $premesis= $premesis->where('uc',auth()->user()->uc);
+          
             }
             elseif(auth()->user()->tehsil){
-                $premesis= $premesis->where('village',auth()->user()->tehsil);
+                $premesis= $premesis->where('tehsil',auth()->user()->tehsil);
+        
             }
             elseif(auth()->user()->district){
-                $premesis= $premesis->where('village',auth()->user()->district);
+                $premesis= $premesis->where('district',auth()->user()->district);
+            
             }
             elseif(auth()->user()->province){
-                $premesis= $premesis->where('village',auth()->user()->province);
+                $premesis= $premesis->where('province',auth()->user()->province);
             }
             $premesis_id=$premesis->pluck('id');
             $animals =Animal::wherein('premesis_id', $premesis_id); 
-            $vaccinations =Vaccination::wherein('premesis_id', $premesis_id); 
-            $diseases =Disease::wherein('premesis_id', $premesis_id); 
-            $species =Specie::wherein('premesis_id', $premesis_id); 
+            $vaccinations =Vaccination::wherein('premises_id', $premesis_id); 
+            $diseases =Disease::wherein('premises_id', $premesis_id); 
             // $premesis = Premesis::where(['province'=>, 	'district'=>, 'tehsil'=>,'uc'=>, 'village'=>]);
 
         return response()->json(
             [
-                'premises' => $premesis->count(),
+                'premises' => $premesis->pluck('id'),
                 'animals' => $animals->count(),
                 'vaccination' => $vaccinations->count(),
                 'labtest' => '-',
                 'dieses' => $diseases->count(),
-                'species' => $species->count(),
                 'breeding' => '-',
                 'birth' => '-',
                 'movment' => '-',
