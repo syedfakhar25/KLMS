@@ -39,7 +39,7 @@ class AdminController extends Controller
 
         return response()->json(
             [
-                'premises' => $premesis->count,
+                'premises' => $premesis->count(),
                 'animals' => $animals->count(),
                 'vaccination' => $vaccinations->count(),
                 'labtest' => '-',
