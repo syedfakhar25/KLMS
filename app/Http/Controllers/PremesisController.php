@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\premesis;
+use App\Models\Premesis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,7 +46,7 @@ class PremesisController extends Controller
     public function store(Request $request)
     {
 
-        $premise = premesis::create($request->all());
+        $premise = Premesis::create($request->all());
         $user = Auth::user();
         if($user->role_id){ 
             $premise->is_approved = true;
@@ -65,7 +65,7 @@ class PremesisController extends Controller
      */
     public function show($id)
     {
-        $premise = premesis::find($id);
+        $premise = Premesis::find($id);
 
         return response()->json(
             ['premise' => $premise],
@@ -92,7 +92,7 @@ class PremesisController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $premise= premesis::find($id);
+         $premise= Premesis::find($id);
          $premise->update($request->all());
 
         return response()->json(
@@ -109,7 +109,7 @@ class PremesisController extends Controller
      */
     public function destroy($id)
     {
-        $premise= premesis::find($id);
+        $premise= Premesis::find($id);
         $premise->delete();
 
         return response()->json(['message' => 'Premise deleted successfully']);

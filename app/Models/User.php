@@ -53,6 +53,6 @@ class User extends Authenticatable
     ];
 
     public function premises(){
-        return $this->hasMany(premesis::class);
+        return $this->hasMany(Premesis::class);
     }
 }
