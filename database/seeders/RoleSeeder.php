@@ -28,6 +28,10 @@ class RoleSeeder extends Seeder
             'description' => 'District Administrator role',
         ]);
         Role::create([
+            'title' => 'Tehsil Admin',
+            'description' => 'Tehsil Administrator role',
+        ]);
+        Role::create([
             'title' => 'UC Admin',
             'description' => 'UC Administrator role',
         ]);
