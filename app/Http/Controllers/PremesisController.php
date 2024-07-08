@@ -17,21 +17,25 @@ class PremesisController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $premesis = Premesis::all();
+        $premesisQuery = Premesis::query();
         if ($user->role_id == 1) {
-            $premesis = $premesis = $premesis->where(['is_approved'=> 1 ]);;
-        } elseif($user->role_id == 2){
-            $premesis = $premesis->where(['user_id'=> $user->user_id]);
-        } elseif($user->role_id == 3){
-            $premesis = $premesis->where(['district'=> $user->district,'is_approved'=> 1]);
-        } elseif($user->role_id == 4){
-            $premesis = $premesis->where(['tehsil'=> $user->tehsil,'is_approved'=> 1]);
-        } elseif($user->role_id == 5){
-            $premesis = $premesis->where(['uc'=> $user->uc,'is_approved'=> 1]);
-        } elseif($user->role_id == 6){
-            $premesis = $premesis->where(['village'=> $user->village,'is_approved'=> 1]);
-        }      
-    
+            $premesisQuery->where('is_approved', 0);
+        } elseif ($user->role_id == 2) {
+            $premesisQuery->where('user_id', $user->id);  // assuming `user_id` is the primary key and not `user_id`
+        } elseif ($user->role_id == 3) {
+            $premesisQuery->where('district', $user->district)
+                          ->where('is_approved', 1);
+        } elseif ($user->role_id == 4) {
+            $premesisQuery->where('tehsil', $user->tehsil)
+                          ->where('is_approved', 1);
+        } elseif ($user->role_id == 5) {
+            $premesisQuery->where('uc', $user->uc)
+                          ->where('is_approved', 1);
+        } elseif ($user->role_id == 6) {
+            $premesisQuery->where('village', $user->village)
+                          ->where('is_approved', 1);
+        }
+        $premesis = $premesisQuery->get();
         return response()->json(
             ['premises' => $premesis],
             200
