@@ -13,20 +13,9 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        $premesis = Premesis::all();
         $user=auth()->user();
+        $premesis = Premesis::all();
         if ($user->roll_id == 1) {
-            // if (auth()->user()->village) {
-            //     $premesis = $premesis->where('province', auth()->user()->province);
-            // } elseif (auth()->user()->uc) {
-            //     $premesis = $premesis->where('uc', auth()->user()->uc);
-            // } elseif (auth()->user()->tehsil) {
-            //     $premesis = $premesis->where('tehsil', auth()->user()->tehsil);
-            // } elseif (auth()->user()->district) {
-            //     $premesis = $premesis->where('district', auth()->user()->district);
-            // } elseif (auth()->user()->province) {
-            //     $premesis = $premesis->where('province', auth()->user()->province);
-            // }
             $premesis = $premesis = $premesis->where(['is_approved'=> 1 ]);;
         } elseif($user->roll_id == 2){
             $premesis = $premesis->where(['user_id'=> $user->user_id]);

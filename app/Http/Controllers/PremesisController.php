@@ -17,12 +17,23 @@ class PremesisController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $premises = Premesis::where('user_id', $user->id)
-                    ->orderBy('created_at', 'desc') 
-                    ->get();    
+        $premesis = Premesis::all();
+        if ($user->roll_id == 1) {
+            $premesis = $premesis = $premesis->where(['is_approved'=> 1 ]);;
+        } elseif($user->roll_id == 2){
+            $premesis = $premesis->where(['user_id'=> $user->user_id]);
+        } elseif($user->roll_id == 3){
+            $premesis = $premesis->where(['district'=> $user->district,'is_approved'=> 1]);
+        } elseif($user->roll_id == 4){
+            $premesis = $premesis->where(['tehsil'=> $user->tehsil,'is_approved'=> 1]);
+        } elseif($user->roll_id == 5){
+            $premesis = $premesis->where(['uc'=> $user->uc,'is_approved'=> 1]);
+        } elseif($user->roll_id == 6){
+            $premesis = $premesis->where(['village'=> $user->village,'is_approved'=> 1]);
+        }     
     
         return response()->json(
-            ['premises' => $premises],
+            ['premises' => $premesis],
             200
         );
     }
