@@ -18,19 +18,19 @@ class PremesisController extends Controller
     {
         $user = Auth::user();
         $premesis = Premesis::all();
-        if ($user->roll_id == 1) {
+        if ($user->role_id == 1) {
             $premesis = $premesis = $premesis->where(['is_approved'=> 1 ]);;
-        } elseif($user->roll_id == 2){
+        } elseif($user->role_id == 2){
             $premesis = $premesis->where(['user_id'=> $user->user_id]);
-        } elseif($user->roll_id == 3){
+        } elseif($user->role_id == 3){
             $premesis = $premesis->where(['district'=> $user->district,'is_approved'=> 1]);
-        } elseif($user->roll_id == 4){
+        } elseif($user->role_id == 4){
             $premesis = $premesis->where(['tehsil'=> $user->tehsil,'is_approved'=> 1]);
-        } elseif($user->roll_id == 5){
+        } elseif($user->role_id == 5){
             $premesis = $premesis->where(['uc'=> $user->uc,'is_approved'=> 1]);
-        } elseif($user->roll_id == 6){
+        } elseif($user->role_id == 6){
             $premesis = $premesis->where(['village'=> $user->village,'is_approved'=> 1]);
-        }     
+        }      
     
         return response()->json(
             ['premises' => $premesis],
