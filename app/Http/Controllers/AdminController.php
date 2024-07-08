@@ -11,31 +11,39 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function dashboard() {
-        $premesis= Premesis::all();
-            if(auth()->user()->village){
-                $premesis= $premesis->where('village',auth()->user()->village);
-            }
-            elseif(auth()->user()->uc){
-                $premesis= $premesis->where('uc',auth()->user()->uc);
-          
-            }
-            elseif(auth()->user()->tehsil){
-                $premesis= $premesis->where('tehsil',auth()->user()->tehsil);
-        
-            }
-            elseif(auth()->user()->district){
-                $premesis= $premesis->where('district',auth()->user()->district);
-            
-            }
-            elseif(auth()->user()->province){
-                $premesis= $premesis->where('province',auth()->user()->province);
-            }
-            $premesis_id=$premesis->pluck('id');
-            $animals =Animal::wherein('premesis_id', $premesis_id); 
-            $vaccinations =Vaccination::wherein('premises_id', $premesis_id); 
-            $diseases =Disease::wherein('premises_id', $premesis_id); 
-            // $premesis = Premesis::where(['province'=>, 	'district'=>, 'tehsil'=>,'uc'=>, 'village'=>]);
+    public function dashboard()
+    {
+        $premesis = Premesis::all();
+        $user=auth()->user();
+        if ($user->roll_id == 1) {
+            // if (auth()->user()->village) {
+            //     $premesis = $premesis->where('province', auth()->user()->province);
+            // } elseif (auth()->user()->uc) {
+            //     $premesis = $premesis->where('uc', auth()->user()->uc);
+            // } elseif (auth()->user()->tehsil) {
+            //     $premesis = $premesis->where('tehsil', auth()->user()->tehsil);
+            // } elseif (auth()->user()->district) {
+            //     $premesis = $premesis->where('district', auth()->user()->district);
+            // } elseif (auth()->user()->province) {
+            //     $premesis = $premesis->where('province', auth()->user()->province);
+            // }
+            $premesis = $premesis = $premesis->where(['is_approved'=> 1 ]);;
+        } elseif($user->roll_id == 2){
+            $premesis = $premesis->where(['user_id'=> $user->user_id]);
+        } elseif($user->roll_id == 3){
+            $premesis = $premesis->where(['district'=> $user->district,'is_approved'=> 1]);
+        } elseif($user->roll_id == 4){
+            $premesis = $premesis->where(['tehsil'=> $user->tehsil,'is_approved'=> 1]);
+        } elseif($user->roll_id == 5){
+            $premesis = $premesis->where(['uc'=> $user->uc,'is_approved'=> 1]);
+        } elseif($user->roll_id == 6){
+            $premesis = $premesis->where(['village'=> $user->village,'is_approved'=> 1]);
+        }  
+        $premesis_id = $premesis->pluck('id');
+        $animals = Animal::wherein('premesis_id', $premesis_id);
+        $vaccinations = Vaccination::wherein('premises_id', $premesis_id);
+        $diseases = Disease::wherein('premises_id', $premesis_id);
+        // $premesis = Premesis::where(['province'=>, 	'district'=>, 'tehsil'=>,'uc'=>, 'village'=>]);
 
         return response()->json(
             [
@@ -51,6 +59,7 @@ class AdminController extends Controller
                 'slaughtered' => '-',
                 'exported' => '-',
             ],
-            200);
+            200
+        );
     }
 }
