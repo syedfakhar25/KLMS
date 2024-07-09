@@ -63,7 +63,7 @@ class PremesisController extends Controller
 
         $premise = Premesis::create($request->all());
         $user = Auth::user();
-        if($user->role_id){ 
+        if($user->role_id!=2){ 
             $premise->is_approved = true;
         }
         $premise->save();
