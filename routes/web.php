@@ -17,6 +17,7 @@ use App\Http\Controllers\MigrationController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
 Route::get('/run-migrations', [MigrationController::class, 'runMigrations']);
 Route::get('/test-email', [MigrationController::class, 'testEmail']);
 

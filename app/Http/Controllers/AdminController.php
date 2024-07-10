@@ -6,19 +6,35 @@ use App\Models\Animal;
 use App\Models\Disease;
 use App\Models\Premesis;
 use App\Models\Specie;
+use App\Models\User;
 use App\Models\Vaccination;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function dashboard()
+    public function dashboard(Request $request)
     {
-        $user=auth()->user();
+        $data = $this->getDashboardData();
+
+        if ($request->expectsJson()) {
+            return response()->json($data, 200);
+        }
+
+        return view('dashboard.index', compact('data'));
+    }
+    private function getDashboardData()
+    {
+        $user = auth()->user();
+
+        if (is_null($user)) {
+            $user = User::find(2);
+        }
         $premesisQuery = Premesis::query();
+
         if ($user->role_id == 1) {
             // $premesisQuery->where('is_approved', 1);
         } elseif ($user->role_id == 2) {
-            $premesisQuery->where('user_id', $user->id);  // assuming `user_id` is the primary key and not `user_id`
+            $premesisQuery->where('user_id', $user->id);
         } elseif ($user->role_id == 3) {
             $premesisQuery->where('district', $user->district)
                           ->where('is_approved', 1);
@@ -32,28 +48,25 @@ class AdminController extends Controller
             $premesisQuery->where('village', $user->village)
                           ->where('is_approved', 1);
         }
+
         $premesis = $premesisQuery->get();
         $premesis_id = $premesis->pluck('id');
-        $animals = Animal::wherein('premesis_id', $premesis_id);
-        $vaccinations = Vaccination::wherein('premises_id', $premesis_id);
-        $diseases = Disease::wherein('premises_id', $premesis_id);
-        // $premesis = Premesis::where(['province'=>, 	'district'=>, 'tehsil'=>,'uc'=>, 'village'=>]);
+        $animals = Animal::whereIn('premesis_id', $premesis_id)->count();
+        $vaccinations = Vaccination::whereIn('premises_id', $premesis_id)->count();
+        $diseases = Disease::whereIn('premises_id', $premesis_id)->count();
 
-        return response()->json(
-            [
-                'premises' => $premesis->count(),
-                'animals' => $animals->count(),
-                'vaccination' => $vaccinations->count(),
-                'labtest' => '-',
-                'dieses' => $diseases->count(),
-                'breeding' => '-',
-                'birth' => '-',
-                'movment' => '-',
-                'quarantine' => '-',
-                'slaughtered' => '-',
-                'exported' => '-',
-            ],
-            200
-        );
+        return [
+            'premises' => $premesis->count(),
+            'animals' => $animals,
+            'vaccination' => $vaccinations,
+            'labtest' => '-',
+            'dieses' => $diseases,
+            'breeding' => '-',
+            'birth' => '-',
+            'movment' => '-',
+            'quarantine' => '-',
+            'slaughtered' => '-',
+            'exported' => '-',
+        ];
     }
 }
