@@ -19,7 +19,7 @@ class PremesisController extends Controller
         $user = Auth::user();
         $premesisQuery = Premesis::query();
         if ($user->role_id == 1) {
-            $premesisQuery->where('is_approved', 0);
+            // $premesisQuery->where('is_approved', 0);
         } elseif ($user->role_id == 2) {
             $premesisQuery->where('user_id', $user->id);  // assuming `user_id` is the primary key and not `user_id`
         } elseif ($user->role_id == 3) {
