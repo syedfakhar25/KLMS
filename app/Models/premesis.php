@@ -44,4 +44,9 @@ class Premesis extends Model
     public function herd(){
         return $this->hasMany(Herd::class);
     }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'district');
+    }
 }
