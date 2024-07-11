@@ -23,17 +23,17 @@ class PremesisController extends Controller
         } elseif ($user->role_id == 2) {
             $premesisQuery->where('user_id', $user->id);  // assuming `user_id` is the primary key and not `user_id`
         } elseif ($user->role_id == 3) {
-            $premesisQuery->where('district', $user->district)
-                          ->where('is_approved', 1);
+            $premesisQuery->where('district', $user->district);
+                          
         } elseif ($user->role_id == 4) {
-            $premesisQuery->where('tehsil', $user->tehsil)
-                          ->where('is_approved', 1);
+            $premesisQuery->where('tehsil', $user->tehsil);
+                          
         } elseif ($user->role_id == 5) {
-            $premesisQuery->where('uc', $user->uc)
-                          ->where('is_approved', 1);
+            $premesisQuery->where('uc', $user->uc);
+                          
         } elseif ($user->role_id == 6) {
-            $premesisQuery->where('village', $user->village)
-                          ->where('is_approved', 1);
+            $premesisQuery->where('village', $user->village);
+                          
         }
         $premesis = $premesisQuery->get();
         return response()->json(
